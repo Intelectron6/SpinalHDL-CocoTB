@@ -3,7 +3,7 @@
 
 `timescale 1ns/1ps
 
-module Axi4Lite_IP (
+module AXI4Lite_IP (
   input  wire          axi_aw_valid,
   output wire          axi_aw_ready,
   input  wire [5:0]    axi_aw_payload_addr,
