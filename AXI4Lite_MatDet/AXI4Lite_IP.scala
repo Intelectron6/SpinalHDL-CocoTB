@@ -5,7 +5,7 @@ import spinal.lib._
 import spinal.lib.fsm._
 import spinal.lib.bus.amba4.axilite._
 
-case class Axi4Lite_IP() extends Component
+case class AXI4Lite_IP() extends Component
 {
     val axi = slave(AxiLite4(AxiLite4Config(6,32,2))) //6 is address width, 32 is data width 
     val slv = AxiLite4SlaveFactory(axi)  
@@ -123,5 +123,5 @@ case class Axi4Lite_IP() extends Component
 
 object MyTopLevelVerilog extends App 
 {
-	Config.spinal.generateVerilog(Axi4Lite_IP())
+	Config.spinal.generateVerilog(AXI4Lite_IP())
 }
