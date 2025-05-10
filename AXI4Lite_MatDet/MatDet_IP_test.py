@@ -61,7 +61,7 @@ async def axi4lite_read(dut, valid, addr):
     return data
 
 @cocotb.test()
-async def AXI4Lite_IP_test(dut):
+async def MatDet_IP_test(dut):
 	
     # create a random 3x3 matrix with elements ranging from -100 to 100 
     A = np.random.randint(-100, 100, size=(3,3))
