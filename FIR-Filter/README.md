@@ -1,4 +1,4 @@
-This is a FIR Filter compute engine with AXI4Lite interface to store filter co-efficients and AXI4Stream interfaces to receive and send data.</br>
+This is an FIR Filter compute engine with AXI4Lite interface to store filter co-efficients and AXI4Stream interfaces to receive and send data.</br>
 </br>
 Design details-</br>
 The design is implemented using SpinalHDL. Both the scala source and generated verilog are included.</br>
