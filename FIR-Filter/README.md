@@ -11,4 +11,9 @@ Python (cocotb library) is used for verification. It works on the generated veri
 Cocotb functions are written for AXI4Lite as well as AXI4Stream transactions.</br>
 Pre-computed filter co-efficients are stored in the DUT via AXI4Lite writes.</br>
 Randomly generated filter inputs elements are fed to the DUT via AXI4Stream slave interface.</br>
-The filtered outputs are read from the DUT via AXI4Stream master interface and compared with software-computed results.</br>
+The filtered outputs are read from the DUT via AXI4Stream master interface.</br>
+
+TO-DO:<br>
+Compute expected outputs in software.<br>
+Compare expected outputs with ouputs received from the FIR Filter.<br>
+Can try using built-in filter function for this?? <br>
