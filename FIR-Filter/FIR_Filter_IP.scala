@@ -12,10 +12,10 @@ case class FIR_Filter_IP() extends Component
     val regs = Vec(Reg(SInt(32 bits)) init 0,9)
     (0 until 9).map(i=>slv.readAndWrite(regs(i), address= i*4))
     //regs0 to regs7 will store the filter coefficients
-	  //regs8 will store indicator that the filter computation has been enabled
+	//regs8 will store indicator that the filter computation has been enabled
 
     //axistream input (slave) and axistream output (master) interfaces
-	  val axiStreamIn  = slave  Stream(SInt(32 bits))
+	val axiStreamIn  = slave  Stream(SInt(32 bits))
     val axiStreamOut = master Stream(SInt(32 bits))
 
     //internal registers
