@@ -24,7 +24,7 @@ module FIR_Filter_IP (
   output wire [31:0]   axi_r_payload_data,
   output wire [1:0]    axi_r_payload_resp,
   input  wire          axiStreamIn_valid,
-  output reg           axiStreamIn_ready,
+  output wire          axiStreamIn_ready,
   input  wire [31:0]   axiStreamIn_payload,
   output reg           axiStreamOut_valid,
   input  wire          axiStreamOut_ready,
@@ -33,20 +33,21 @@ module FIR_Filter_IP (
   input  wire          reset
 );
 
-  wire       [63:0]   _zz_prodregs_0;
-  wire       [63:0]   _zz_prodregs_1;
-  wire       [63:0]   _zz_prodregs_2;
-  wire       [63:0]   _zz_prodregs_3;
-  wire       [63:0]   _zz_prodregs_4;
-  wire       [63:0]   _zz_prodregs_5;
-  wire       [63:0]   _zz_prodregs_6;
-  wire       [63:0]   _zz_prodregs_7;
-  wire       [31:0]   _zz_axiStreamOut_payload;
-  wire       [31:0]   _zz_axiStreamOut_payload_1;
-  wire       [31:0]   _zz_axiStreamOut_payload_2;
-  wire       [31:0]   _zz_axiStreamOut_payload_3;
-  wire       [31:0]   _zz_axiStreamOut_payload_4;
-  wire       [31:0]   _zz_axiStreamOut_payload_5;
+  wire       [63:0]   _zz_axiStreamOut_payload;
+  wire       [63:0]   _zz_axiStreamOut_payload_1;
+  wire       [63:0]   _zz_axiStreamOut_payload_2;
+  wire       [63:0]   _zz_axiStreamOut_payload_3;
+  wire       [63:0]   _zz_axiStreamOut_payload_4;
+  wire       [63:0]   _zz_axiStreamOut_payload_5;
+  wire       [63:0]   _zz_axiStreamOut_payload_6;
+  wire       [63:0]   _zz_axiStreamOut_payload_7;
+  wire       [63:0]   _zz_axiStreamOut_payload_8;
+  wire       [63:0]   _zz_axiStreamOut_payload_9;
+  wire       [63:0]   _zz_axiStreamOut_payload_10;
+  wire       [63:0]   _zz_axiStreamOut_payload_11;
+  wire       [63:0]   _zz_axiStreamOut_payload_12;
+  wire       [63:0]   _zz_axiStreamOut_payload_13;
+  wire       [63:0]   _zz_axiStreamOut_payload_14;
   wire                slv_readErrorFlag;
   wire                slv_writeErrorFlag;
   wire                slv_readHaltRequest;
@@ -78,15 +79,15 @@ module FIR_Filter_IP (
   wire       [5:0]    slv_readAddressMasked;
   wire       [5:0]    slv_writeAddressMasked;
   wire                slv_readOccur;
-  reg        [31:0]   regs_0;
-  reg        [31:0]   regs_1;
-  reg        [31:0]   regs_2;
-  reg        [31:0]   regs_3;
-  reg        [31:0]   regs_4;
-  reg        [31:0]   regs_5;
-  reg        [31:0]   regs_6;
-  reg        [31:0]   regs_7;
-  reg        [31:0]   regs_8;
+  reg        [31:0]   coeffs_0;
+  reg        [31:0]   coeffs_1;
+  reg        [31:0]   coeffs_2;
+  reg        [31:0]   coeffs_3;
+  reg        [31:0]   coeffs_4;
+  reg        [31:0]   coeffs_5;
+  reg        [31:0]   coeffs_6;
+  reg        [31:0]   coeffs_7;
+  reg                 enable;
   reg        [31:0]   delregs_0;
   reg        [31:0]   delregs_1;
   reg        [31:0]   delregs_2;
@@ -94,7 +95,7 @@ module FIR_Filter_IP (
   reg        [31:0]   delregs_4;
   reg        [31:0]   delregs_5;
   reg        [31:0]   delregs_6;
-  wire       [31:0]   delregs_7;
+  reg        [31:0]   delregs_7;
   reg                 delvals_0;
   reg                 delvals_1;
   reg                 delvals_2;
@@ -103,30 +104,22 @@ module FIR_Filter_IP (
   reg                 delvals_5;
   reg                 delvals_6;
   reg                 delvals_7;
-  reg        [31:0]   prodregs_0;
-  reg        [31:0]   prodregs_1;
-  reg        [31:0]   prodregs_2;
-  reg        [31:0]   prodregs_3;
-  reg        [31:0]   prodregs_4;
-  reg        [31:0]   prodregs_5;
-  reg        [31:0]   prodregs_6;
-  reg        [31:0]   prodregs_7;
-  wire                when_MyTopLevel_l25;
 
-  assign _zz_prodregs_0 = ($signed(axiStreamIn_payload) * $signed(regs_0));
-  assign _zz_prodregs_1 = ($signed(delregs_0) * $signed(regs_1));
-  assign _zz_prodregs_2 = ($signed(delregs_1) * $signed(regs_2));
-  assign _zz_prodregs_3 = ($signed(delregs_2) * $signed(regs_3));
-  assign _zz_prodregs_4 = ($signed(delregs_3) * $signed(regs_4));
-  assign _zz_prodregs_5 = ($signed(delregs_4) * $signed(regs_5));
-  assign _zz_prodregs_6 = ($signed(delregs_5) * $signed(regs_6));
-  assign _zz_prodregs_7 = ($signed(delregs_6) * $signed(regs_7));
-  assign _zz_axiStreamOut_payload = ($signed(_zz_axiStreamOut_payload_1) + $signed(prodregs_6));
-  assign _zz_axiStreamOut_payload_1 = ($signed(_zz_axiStreamOut_payload_2) + $signed(prodregs_5));
-  assign _zz_axiStreamOut_payload_2 = ($signed(_zz_axiStreamOut_payload_3) + $signed(prodregs_4));
-  assign _zz_axiStreamOut_payload_3 = ($signed(_zz_axiStreamOut_payload_4) + $signed(prodregs_3));
-  assign _zz_axiStreamOut_payload_4 = ($signed(_zz_axiStreamOut_payload_5) + $signed(prodregs_2));
-  assign _zz_axiStreamOut_payload_5 = ($signed(prodregs_0) + $signed(prodregs_1));
+  assign _zz_axiStreamOut_payload = ($signed(_zz_axiStreamOut_payload_1) + $signed(_zz_axiStreamOut_payload_14));
+  assign _zz_axiStreamOut_payload_1 = ($signed(_zz_axiStreamOut_payload_2) + $signed(_zz_axiStreamOut_payload_13));
+  assign _zz_axiStreamOut_payload_2 = ($signed(_zz_axiStreamOut_payload_3) + $signed(_zz_axiStreamOut_payload_12));
+  assign _zz_axiStreamOut_payload_3 = ($signed(_zz_axiStreamOut_payload_4) + $signed(_zz_axiStreamOut_payload_11));
+  assign _zz_axiStreamOut_payload_4 = ($signed(_zz_axiStreamOut_payload_5) + $signed(_zz_axiStreamOut_payload_10));
+  assign _zz_axiStreamOut_payload_5 = ($signed(_zz_axiStreamOut_payload_6) + $signed(_zz_axiStreamOut_payload_9));
+  assign _zz_axiStreamOut_payload_6 = ($signed(_zz_axiStreamOut_payload_7) + $signed(_zz_axiStreamOut_payload_8));
+  assign _zz_axiStreamOut_payload_7 = ($signed(delregs_0) * $signed(coeffs_0));
+  assign _zz_axiStreamOut_payload_8 = ($signed(delregs_1) * $signed(coeffs_1));
+  assign _zz_axiStreamOut_payload_9 = ($signed(delregs_2) * $signed(coeffs_2));
+  assign _zz_axiStreamOut_payload_10 = ($signed(delregs_3) * $signed(coeffs_3));
+  assign _zz_axiStreamOut_payload_11 = ($signed(delregs_4) * $signed(coeffs_4));
+  assign _zz_axiStreamOut_payload_12 = ($signed(delregs_5) * $signed(coeffs_5));
+  assign _zz_axiStreamOut_payload_13 = ($signed(delregs_6) * $signed(coeffs_6));
+  assign _zz_axiStreamOut_payload_14 = ($signed(delregs_7) * $signed(coeffs_7));
   assign slv_readErrorFlag = 1'b0;
   assign slv_writeErrorFlag = 1'b0;
   assign slv_readHaltRequest = 1'b0;
@@ -187,31 +180,31 @@ module FIR_Filter_IP (
     slv_readRsp_data = 32'h00000000;
     case(slv_readAddressMasked)
       6'h00 : begin
-        slv_readRsp_data[31 : 0] = regs_0;
+        slv_readRsp_data[31 : 0] = coeffs_0;
       end
       6'h04 : begin
-        slv_readRsp_data[31 : 0] = regs_1;
+        slv_readRsp_data[31 : 0] = coeffs_1;
       end
       6'h08 : begin
-        slv_readRsp_data[31 : 0] = regs_2;
+        slv_readRsp_data[31 : 0] = coeffs_2;
       end
       6'h0c : begin
-        slv_readRsp_data[31 : 0] = regs_3;
+        slv_readRsp_data[31 : 0] = coeffs_3;
       end
       6'h10 : begin
-        slv_readRsp_data[31 : 0] = regs_4;
+        slv_readRsp_data[31 : 0] = coeffs_4;
       end
       6'h14 : begin
-        slv_readRsp_data[31 : 0] = regs_5;
+        slv_readRsp_data[31 : 0] = coeffs_5;
       end
       6'h18 : begin
-        slv_readRsp_data[31 : 0] = regs_6;
+        slv_readRsp_data[31 : 0] = coeffs_6;
       end
       6'h1c : begin
-        slv_readRsp_data[31 : 0] = regs_7;
+        slv_readRsp_data[31 : 0] = coeffs_7;
       end
       6'h20 : begin
-        slv_readRsp_data[31 : 0] = regs_8;
+        slv_readRsp_data[0 : 0] = enable;
       end
       default : begin
       end
@@ -221,33 +214,18 @@ module FIR_Filter_IP (
   assign slv_readAddressMasked = (slv_readDataStage_payload_addr & (~ 6'h03));
   assign slv_writeAddressMasked = (axi_aw_payload_addr & (~ 6'h03));
   assign slv_readOccur = (axi_r_valid && axi_r_ready);
-  assign delregs_7 = 32'h00000000;
-  assign when_MyTopLevel_l25 = ($signed(regs_8) == $signed(32'h00000001));
+  assign axiStreamIn_ready = enable;
   always @(*) begin
-    if(when_MyTopLevel_l25) begin
-      axiStreamIn_ready = 1'b1;
-    end else begin
-      axiStreamIn_ready = 1'b0;
-    end
-  end
-
-  always @(*) begin
-    if(when_MyTopLevel_l25) begin
+    axiStreamOut_valid = 1'b0;
+    if(enable) begin
       axiStreamOut_valid = delvals_7;
-    end else begin
-      axiStreamOut_valid = 1'b0;
     end
   end
 
   always @(*) begin
-    if(when_MyTopLevel_l25) begin
-      if(delvals_7) begin
-        axiStreamOut_payload = ($signed(_zz_axiStreamOut_payload) + $signed(prodregs_7));
-      end else begin
-        axiStreamOut_payload = 32'h00000000;
-      end
-    end else begin
-      axiStreamOut_payload = 32'h00000000;
+    axiStreamOut_payload = 32'h00000000;
+    if(enable) begin
+      axiStreamOut_payload = _zz_axiStreamOut_payload[31:0];
     end
   end
 
@@ -255,15 +233,15 @@ module FIR_Filter_IP (
     if(reset) begin
       _zz_axi_b_valid_1 <= 1'b0;
       axi_ar_rValid <= 1'b0;
-      regs_0 <= 32'h00000000;
-      regs_1 <= 32'h00000000;
-      regs_2 <= 32'h00000000;
-      regs_3 <= 32'h00000000;
-      regs_4 <= 32'h00000000;
-      regs_5 <= 32'h00000000;
-      regs_6 <= 32'h00000000;
-      regs_7 <= 32'h00000000;
-      regs_8 <= 32'h00000000;
+      coeffs_0 <= 32'h00000000;
+      coeffs_1 <= 32'h00000000;
+      coeffs_2 <= 32'h00000000;
+      coeffs_3 <= 32'h00000000;
+      coeffs_4 <= 32'h00000000;
+      coeffs_5 <= 32'h00000000;
+      coeffs_6 <= 32'h00000000;
+      coeffs_7 <= 32'h00000000;
+      enable <= 1'b0;
       delregs_0 <= 32'h00000000;
       delregs_1 <= 32'h00000000;
       delregs_2 <= 32'h00000000;
@@ -271,6 +249,7 @@ module FIR_Filter_IP (
       delregs_4 <= 32'h00000000;
       delregs_5 <= 32'h00000000;
       delregs_6 <= 32'h00000000;
+      delregs_7 <= 32'h00000000;
       delvals_0 <= 1'b0;
       delvals_1 <= 1'b0;
       delvals_2 <= 1'b0;
@@ -279,14 +258,6 @@ module FIR_Filter_IP (
       delvals_5 <= 1'b0;
       delvals_6 <= 1'b0;
       delvals_7 <= 1'b0;
-      prodregs_0 <= 32'h00000000;
-      prodregs_1 <= 32'h00000000;
-      prodregs_2 <= 32'h00000000;
-      prodregs_3 <= 32'h00000000;
-      prodregs_4 <= 32'h00000000;
-      prodregs_5 <= 32'h00000000;
-      prodregs_6 <= 32'h00000000;
-      prodregs_7 <= 32'h00000000;
     end else begin
       if(_zz_slv_writeJoinEvent_translated_ready_1) begin
         _zz_axi_b_valid_1 <= (slv_writeJoinEvent_translated_valid && _zz_slv_writeJoinEvent_translated_ready);
@@ -294,91 +265,82 @@ module FIR_Filter_IP (
       if(axi_ar_ready) begin
         axi_ar_rValid <= axi_ar_valid;
       end
-      if(when_MyTopLevel_l25) begin
+      if(enable) begin
         delvals_0 <= axiStreamIn_valid;
+        delregs_0 <= axiStreamIn_payload;
         delvals_1 <= delvals_0;
-        delvals_2 <= delvals_1;
-        delvals_3 <= delvals_2;
-        delvals_4 <= delvals_3;
-        delvals_5 <= delvals_4;
-        delvals_6 <= delvals_5;
-        delvals_7 <= delvals_6;
-        if(axiStreamIn_valid) begin
-          delregs_0 <= axiStreamIn_payload;
-          prodregs_0 <= _zz_prodregs_0[31:0];
-        end
         if(delvals_0) begin
           delregs_1 <= delregs_0;
-          prodregs_1 <= _zz_prodregs_1[31:0];
         end
+        delvals_2 <= delvals_1;
         if(delvals_1) begin
           delregs_2 <= delregs_1;
-          prodregs_2 <= _zz_prodregs_2[31:0];
         end
+        delvals_3 <= delvals_2;
         if(delvals_2) begin
           delregs_3 <= delregs_2;
-          prodregs_3 <= _zz_prodregs_3[31:0];
         end
+        delvals_4 <= delvals_3;
         if(delvals_3) begin
           delregs_4 <= delregs_3;
-          prodregs_4 <= _zz_prodregs_4[31:0];
         end
+        delvals_5 <= delvals_4;
         if(delvals_4) begin
           delregs_5 <= delregs_4;
-          prodregs_5 <= _zz_prodregs_5[31:0];
         end
+        delvals_6 <= delvals_5;
         if(delvals_5) begin
           delregs_6 <= delregs_5;
-          prodregs_6 <= _zz_prodregs_6[31:0];
         end
+        delvals_7 <= delvals_6;
         if(delvals_6) begin
-          prodregs_7 <= _zz_prodregs_7[31:0];
+          delregs_7 <= delregs_6;
         end
       end
       case(slv_writeAddressMasked)
         6'h00 : begin
           if(slv_writeOccur) begin
-            regs_0 <= axi_w_payload_data[31 : 0];
+            coeffs_0 <= axi_w_payload_data[31 : 0];
           end
         end
         6'h04 : begin
           if(slv_writeOccur) begin
-            regs_1 <= axi_w_payload_data[31 : 0];
+            coeffs_1 <= axi_w_payload_data[31 : 0];
           end
         end
         6'h08 : begin
           if(slv_writeOccur) begin
-            regs_2 <= axi_w_payload_data[31 : 0];
+            coeffs_2 <= axi_w_payload_data[31 : 0];
           end
         end
         6'h0c : begin
           if(slv_writeOccur) begin
-            regs_3 <= axi_w_payload_data[31 : 0];
+            coeffs_3 <= axi_w_payload_data[31 : 0];
           end
         end
         6'h10 : begin
           if(slv_writeOccur) begin
-            regs_4 <= axi_w_payload_data[31 : 0];
+            coeffs_4 <= axi_w_payload_data[31 : 0];
           end
         end
         6'h14 : begin
           if(slv_writeOccur) begin
-            regs_5 <= axi_w_payload_data[31 : 0];
+            coeffs_5 <= axi_w_payload_data[31 : 0];
           end
         end
         6'h18 : begin
           if(slv_writeOccur) begin
-            regs_6 <= axi_w_payload_data[31 : 0];
+            coeffs_6 <= axi_w_payload_data[31 : 0];
           end
         end
         6'h1c : begin
           if(slv_writeOccur) begin
-            regs_7 <= axi_w_payload_data[31 : 0];
+            coeffs_7 <= axi_w_payload_data[31 : 0];
           end
         end
         6'h20 : begin
           if(slv_writeOccur) begin
-            regs_8 <= axi_w_payload_data[31 : 0];
+            enable <= axi_w_payload_data[0];
           end
         end
         default : begin
@@ -396,6 +358,5 @@ module FIR_Filter_IP (
       axi_ar_rData_prot <= axi_ar_payload_prot;
     end
   end
-
 
 endmodule
